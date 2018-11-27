@@ -1,0 +1,6 @@
+/virtual
+*.pycache
+*.pyc
+/vscode
+.env
+
