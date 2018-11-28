@@ -3,8 +3,8 @@ import os
 class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://lorna:0724276722@localhost/project'
     SQLALCHEMY_TRACK_MODIFICATIONS=True
-    SECRET_KEY=
-    UPLOADED_PHOTOS_DEST=
+    SECRET_KEY= 'secret key'
+    UPLOADED_PHOTOS_DEST= 'app/static/photos'
 
 # email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
