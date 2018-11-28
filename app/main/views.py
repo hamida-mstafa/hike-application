@@ -3,13 +3,12 @@ from flask import render_template,request,redirect,url_for,abort
 from flask_login import login_required,current_user
 from . import main
 from .. import db,photos
-from ..models import Event,Review,User,Planner
-from .forms import UpdateProfile,PitchForm,CommentForm
+from ..models import Event,Review,User,Plan
+from .forms import UpdateProfile,EventForm,ReviewForm
 
 @main.route('/')
 def index():
-    posts = Eventpost.query.order_by(Eventpost.date_posted.desc()).all()
-
+    posts = Event.query.order_by(Event.posted.desc()).all()
     return render_template('index.html', posts=posts)
 
 @main.route('/about')
