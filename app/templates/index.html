@@ -70,10 +70,10 @@
                 {{ post.event_title }}
               </h2>
               <h3 class="post-subtitle">
-                {{ post.subtitle }}
+                {{ post.description }}
               </h3>
             </a>
-            <p class="post-meta">Posted by {{ post.planner }} on {{ post.posted.strftime('%B %d, %Y') }}</p>
+            <p class="post-meta">Posted on {{ post.posted.strftime('%B %d, %Y') }}</p>
           </div>
           {% endfor %}
           <hr>
