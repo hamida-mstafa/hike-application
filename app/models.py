@@ -50,8 +50,11 @@ class Event(db.Model):
     pic_path = db.Column(db.String())
     posted = db.Column(db.DateTime,default=datetime.utcnow)
 
-
+    plan = db.relationship('Plan',backref = 'event',lazy = "dynamic")
     review = db.relationship('Review',backref = 'event',lazy = "dynamic")
+
+    author = db.Column(db.Integer,db.ForeignKey("users.id"))
+    
 
     def save_event(self):
         db.session.add(self)
@@ -71,7 +74,7 @@ class Review(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     content = db.Column(db.String())
-    event_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    event_id = db.Column(db.Integer,db.ForeignKey('events.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
     def save_review(self):
@@ -93,8 +96,9 @@ class Plan(db.Model):
     organisation = db.Column(db.String())
 
     password_hash = db.Column(db.String(255))
-    events = db.relationship('Event',backref = 'user',lazy = "dynamic")
-    review = db.relationship('Review',backref = 'user',lazy = "dynamic")
+   
+    event_id = db.Column(db.Integer,db.ForeignKey('events.id'))
+    
 
     @property
     def password(self):
@@ -109,11 +113,3 @@ class Plan(db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
-
-
-
-
-
-
-
-
