@@ -1,24 +1,23 @@
 from . import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
-from app import create_app
+from app import create_app,login_manager
 from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+    
 
 class User(UserMixin,db.Model):
     __tablename__='users'
 
-    id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255),index = True)
-    email = db.Column(db.String(255),index = True)
-    bio = db.Column(db.String(255))
-    interests = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15), unique=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(80))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
-
     events = db.relationship('Event',backref = 'user',lazy = "dynamic")
     review = db.relationship('Review',backref = 'user',lazy = "dynamic")
 
@@ -31,7 +30,7 @@ class User(UserMixin,db.Model):
     def password(self,password):
         self.password_hash = generate_password_hash(password)
 
-    def verify_password(self,password):
+    def check_password_hash(self,password):
         return check_password_hash(self.password_hash,password)
 
     def __repr__(self):
